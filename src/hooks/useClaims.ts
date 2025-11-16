@@ -1,0 +1,67 @@
+import { useCallback, useEffect, useState } from 'react';
+import { Claim, getClaims } from '../services/claims.service';
+
+type ClaimFilter = 'all' | 'open' | 'closed';
+
+interface UseClaimsOptions {
+  filter?: ClaimFilter;
+  limit?: number;
+}
+
+interface UseClaimsReturn {
+  claims: Claim[];
+  isLoading: boolean;
+  error: string | null;
+  refetch: () => Promise<void>;
+}
+
+export function useClaims(options: UseClaimsOptions = {}): UseClaimsReturn {
+  const { filter = 'all', limit } = options;
+
+  const [claims, setClaims] = useState<Claim[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchClaims = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await getClaims();
+
+      if (response.success && response.data) {
+        let filteredClaims = response.data;
+
+        if (filter === 'open') {
+          filteredClaims = filteredClaims.filter((c) => c.reclamo_estado === 'ABIERTO');
+        } else if (filter === 'closed') {
+          filteredClaims = filteredClaims.filter((c) => c.reclamo_estado === 'CERRADO');
+        }
+
+        if (limit && limit > 0) {
+          filteredClaims = filteredClaims.slice(0, limit);
+        }
+
+        setClaims(filteredClaims);
+      } else {
+        setError(response.error || 'Error al cargar reclamos');
+      }
+    } catch (err) {
+      setError('Error de conexión');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [filter, limit]);
+
+  useEffect(() => {
+    fetchClaims();
+  }, [fetchClaims]);
+
+  return {
+    claims,
+    isLoading,
+    error,
+    refetch: fetchClaims,
+  };
+}
+
