@@ -116,26 +116,25 @@ export default function ClaimDetailScreen() {
     }
 
     const encodedDestination = encodeURIComponent(destination);
+
     const mapUrls = [
-      `geo:0,0?q=${encodedDestination}`,
-      `comgooglemaps://?daddr=${encodedDestination}&directionsmode=driving`,
-      `https://www.google.com/maps/dir/?api=1&destination=${encodedDestination}`,
+      `geo:0,0?q=${encodedDestination}`, // intento mapa nativo
+      `comgooglemaps://?daddr=${encodedDestination}&directionsmode=driving`, // intento googl maps 
+      `https://www.google.com/maps/dir/?api=1&destination=${encodedDestination}`, // intento final sitio web
     ];
 
     for (const url of mapUrls) {
       try {
-        const supported = await Linking.canOpenURL(url);
-        if (supported) {
-          await Linking.openURL(url);
-          return;
-        }
-      } catch {
-        continue;
+        await Linking.openURL(url);
+        return;
+      } catch (error) {
+        console.warn(`No se pudo abrir: ${url}`, error);
       }
     }
 
-    Alert.alert('Error', 'No se pudo abrir el mapa en este dispositivo');
+    Alert.alert('Error', 'No se pudo abrir el mapa en este dispositivo.');
   };
+
 
   const handleCallPhone = async (phoneNumber: string) => {
     const url = `tel:${phoneNumber}`;
@@ -215,9 +214,9 @@ export default function ClaimDetailScreen() {
         setSelectedEstado('');
         setNotaCierre('');
         setPresupuesto('');
-        
+
         await fetchClaimDetail();
-        
+
         Alert.alert('Éxito', 'Reclamo actualizado correctamente');
       } else {
         Alert.alert('Error', response.error || 'No se pudo actualizar el reclamo');
@@ -484,7 +483,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#eee',
     padding: 16,
-    
+
   },
   centerContainer: {
     flex: 1,
