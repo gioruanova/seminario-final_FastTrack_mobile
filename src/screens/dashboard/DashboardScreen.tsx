@@ -31,6 +31,10 @@ export default function DashboardScreen() {
   const hasMoreOpenClaims = openClaims.claims.length > 5;
   const hasMoreClosedClaims = closedClaims.claims.length > 5;
 
+
+
+
+
   const handleClaimPress = (claim: Claim) => {
     navigation.navigate('ClaimDetail', { reclamoId: claim.reclamo_id });
   };
@@ -73,7 +77,7 @@ export default function DashboardScreen() {
 
       <View style={styles.sectionContainer}>
         <PageHeader
-          title="Reclamos Abiertos (Últimos 5)"
+          title={`Reclamos Abiertos ${openClaimsToShow.length > 0 ? `(Últimos ${openClaimsToShow.length})` : ''}`}
           onRefresh={handleRefreshOpen}
           isRefreshing={isRefreshingOpen}
           disabled={openClaims.isLoading}
@@ -91,7 +95,7 @@ export default function DashboardScreen() {
 
       <View style={styles.sectionContainer}>
         <PageHeader
-          title="Reclamos Cerrados (Últimos 5)"
+          title={`Reclamos Cerrados ${openClaimsToShow.length > 0 ? `(Últimos ${closedClaimsToShow.length})` : ``}`}
           onRefresh={handleRefreshClosed}
           isRefreshing={isRefreshingClosed}
           disabled={closedClaims.isLoading}
@@ -113,6 +117,11 @@ export default function DashboardScreen() {
 const styles = StyleSheet.create({
   sectionContainer: {
     marginBottom: 20,
+    backgroundColor: COLORS.white,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#eee',
+    padding: 16,
   },
   welcomeText: {
     fontSize: 24,
@@ -151,6 +160,7 @@ const styles = StyleSheet.create({
   },
   logoutButton: {
     marginTop: 24,
+    marginBottom: 20,
     padding: 16,
     backgroundColor: COLORS.danger,
     borderRadius: 8,

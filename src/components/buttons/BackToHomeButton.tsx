@@ -29,9 +29,6 @@ const navigateToScreen = (
     case 'QuickContacts':
       navigation.navigate('QuickContacts');
       break;
-    case 'Mensajes':
-      navigation.navigate('Mensajes');
-      break;
     case 'Feedback':
       navigation.navigate('Feedback');
       break;

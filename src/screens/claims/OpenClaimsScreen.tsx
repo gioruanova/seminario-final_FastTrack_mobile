@@ -1,10 +1,12 @@
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 import BackToHomeButton from '../../components/buttons/BackToHomeButton';
 import ClaimsList from '../../components/cards/ClaimsList';
 import PageHeader from '../../components/header/PageHeader';
 import ScreenLayout from '../../components/layout/ScreenLayout';
+import { COLORS } from '../../constants/theme';
 import { useClaims } from '../../hooks/useClaims';
 import { Claim } from '../../services/claims.service';
 import { RootDrawerParamList } from '../../types/navigation';
@@ -28,24 +30,37 @@ export default function OpenClaimsScreen() {
   
   return (
     <ScreenLayout>
-      <PageHeader 
-        title="Reclamos Abiertos" 
-        onRefresh={handleRefresh} 
-        isRefreshing={isRefreshing} 
-        disabled={isLoading}
-      />
-      
-      <ClaimsList
-        claims={claims}
-        isLoading={isLoading}
-        error={error}
-        emptyMessage="No hay reclamos abiertos"
-        onClaimPress={handleClaimPress}
-      />
+      <View style={styles.container}>
+        <PageHeader 
+          title="Reclamos Abiertos" 
+          onRefresh={handleRefresh} 
+          isRefreshing={isRefreshing} 
+          disabled={isLoading}
+        />
+        
+        <ClaimsList
+          claims={claims}
+          isLoading={isLoading}
+          error={error}
+          emptyMessage="No hay reclamos abiertos"
+          onClaimPress={handleClaimPress}
+        />
+      </View>
       
       <BackToHomeButton />
     </ScreenLayout>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    borderWidth: 1,
+    borderColor: '#eee',
+    borderRadius: 12,
+    padding: 16,
+    backgroundColor: COLORS.white,
+    marginBottom: 20,
+  },
+});
 
 

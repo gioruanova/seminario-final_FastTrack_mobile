@@ -28,3 +28,8 @@ Editar `src/constants/config.ts`:
 ```typescript
 const environment = 'dev'; // o 'prod'
 ```
+
+
+eas build --platform android --profile production
+
+para build prod

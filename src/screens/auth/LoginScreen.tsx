@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, } from 'react-native';
+import { ActivityIndicator, Alert, ImageBackground, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, } from 'react-native';
 import { COLORS } from '../../constants/theme';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -38,18 +38,22 @@ export default function LoginScreen() {
     }
   };
 
-  return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}
-    >
-      <View style={styles.content}>
-        <View style={styles.header}>
-          <Text style={styles.title}>FastTrack</Text>
-          <Text style={styles.subtitle}>Inicia sesión en tu cuenta</Text>
-        </View>
+  const backgroundImage = require('../../../assets/images/bg-mobile.jpg');
 
-        <View style={styles.form}>
+  return (
+    <ImageBackground source={backgroundImage} style={styles.container} resizeMode="cover">
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboardView}
+      >
+        <View style={styles.content}>
+            <View style={styles.formContainer}>
+              <View style={styles.header}>
+                <Text style={styles.title}>FastTrack</Text>
+                <Text style={styles.subtitle}>Inicia sesión en tu cuenta</Text>
+              </View>
+
+              <View style={styles.form}>
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Email</Text>
             <TextInput
@@ -89,20 +93,31 @@ export default function LoginScreen() {
             )}
           </TouchableOpacity>
         </View>
-      </View>
-    </KeyboardAvoidingView>
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+  },
+  keyboardView: {
+    flex: 1,
   },
   content: {
     flex: 1,
     padding: 24,
     justifyContent: 'center',
+  },
+  formContainer: {
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: 12,
+    padding: 24,
+    borderWidth: 1,
+    borderColor: '#eee',
   },
   header: {
     marginBottom: 48,

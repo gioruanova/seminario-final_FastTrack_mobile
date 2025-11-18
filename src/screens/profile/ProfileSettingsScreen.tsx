@@ -188,6 +188,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 24,
     gap: 12,
+    
   },
   infoText: {
     flex: 1,
@@ -196,6 +197,11 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 24,
+    backgroundColor: COLORS.white,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#eee',
+    padding: 16,
   },
   sectionTitle: {
     fontSize: 18,

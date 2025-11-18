@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ft-mobile",
-    "slug": "ft-mobile",
+    "name": "Portal Fast Track",
+    "slug": "fasttrack",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -13,14 +13,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/main-bg.png",
-        "backgroundImage": "./assets/images/main-bg.png",
-        "monochromeImage": "./assets/images/main-bg.png"
+        "foregroundImage": "./assets/images/icon.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.ftmobile"
+      "package": "com.fastrack.fastmobile",
+      "googleServicesFile": "./google-services.json",
+      "useNextNotificationsApi": true,
+      "versionCode": 2
     },
     "web": {
       "output": "static",
@@ -38,10 +38,23 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/icon.png",
+          "color": "#8e51ff",
+          "sounds": []
+        }
       ]
     ],
     "experiments": {
       "reactCompiler": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7a4ffaa8-cfd2-411c-be16-cfc28e383b35"
+      }
     }
   }
 }

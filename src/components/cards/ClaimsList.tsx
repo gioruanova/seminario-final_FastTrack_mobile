@@ -150,8 +150,10 @@ const styles = StyleSheet.create({
   },
   claimCard: {
     padding: 16,
-    backgroundColor: '#F5F5F5',
-    borderRadius: 8,
+    backgroundColor: COLORS.white,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#eee',
     borderLeftWidth: 4,
   },
   claimOpen: {

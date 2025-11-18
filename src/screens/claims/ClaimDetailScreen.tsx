@@ -108,19 +108,33 @@ export default function ClaimDetailScreen() {
   };
 
   const handleOpenMap = async () => {
-    const url = `https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=${claim?.cliente_lat},${claim?.cliente_lng}`;
+    const destination = claim?.cliente_direccion?.trim();
 
-    try {
-      const supported = await Linking.canOpenURL(url);
-
-      if (supported) {
-        await Linking.openURL(url);
-      } else {
-        Alert.alert('Error', 'No se puede abrir el mapa en este dispositivo');
-      }
-    } catch {
-      Alert.alert('Error', 'No se pudo abrir el mapa');
+    if (!destination) {
+      Alert.alert('Sin ubicación', 'No contamos con la dirección del cliente.');
+      return;
     }
+
+    const encodedDestination = encodeURIComponent(destination);
+    const mapUrls = [
+      `geo:0,0?q=${encodedDestination}`,
+      `comgooglemaps://?daddr=${encodedDestination}&directionsmode=driving`,
+      `https://www.google.com/maps/dir/?api=1&destination=${encodedDestination}`,
+    ];
+
+    for (const url of mapUrls) {
+      try {
+        const supported = await Linking.canOpenURL(url);
+        if (supported) {
+          await Linking.openURL(url);
+          return;
+        }
+      } catch {
+        continue;
+      }
+    }
+
+    Alert.alert('Error', 'No se pudo abrir el mapa en este dispositivo');
   };
 
   const handleCallPhone = async (phoneNumber: string) => {
@@ -465,6 +479,12 @@ export default function ClaimDetailScreen() {
 const styles = StyleSheet.create({
   sectionContainer: {
     marginBottom: 20,
+    backgroundColor: COLORS.white,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#eee',
+    padding: 16,
+    
   },
   centerContainer: {
     flex: 1,
@@ -487,8 +507,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   card: {
-    backgroundColor: '#F5F5F5',
-    borderRadius: 8,
+    backgroundColor: COLORS.white,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#eee',
     padding: 16,
     marginBottom: 20,
   },

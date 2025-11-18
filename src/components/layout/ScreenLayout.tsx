@@ -1,6 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
-import { COLORS } from '../../constants/theme';
+import { ImageBackground, ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
 import Footer from '../footer/Footer';
 
 interface ScreenLayoutProps {
@@ -10,41 +9,47 @@ interface ScreenLayoutProps {
 }
 
 export default function ScreenLayout({ children, style, scrollable = true }: ScreenLayoutProps) {
+  const backgroundImage = require('../../../assets/images/bg-mobile.jpg');
+
   if (!scrollable) {
     return (
-      <View style={[styles.container, style]}>
+      <ImageBackground source={backgroundImage} style={[styles.container, style]} resizeMode="cover">
         <View style={styles.content}>
           {children}
         </View>
         <Footer />
-      </View>
+      </ImageBackground>
     );
   }
 
   return (
-    <ScrollView 
-      style={[styles.container, style]}
-      contentContainerStyle={styles.contentContainer}
-    >
-      <View style={styles.content}>
-        {children}
-      </View>
-      <Footer />
-    </ScrollView>
+    <ImageBackground source={backgroundImage} style={[styles.container, style]} resizeMode="cover">
+      <ScrollView 
+        style={styles.scrollView}
+        contentContainerStyle={styles.contentContainer}
+      >
+        <View style={styles.content}>
+          {children}
+        </View>
+        <Footer />
+      </ScrollView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+  },
+  scrollView: {
+    flex: 1,
   },
   contentContainer: {
     flexGrow: 1,
   },
   content: {
     flex: 1,
-    padding: 24,
+    padding: 8,
   },
 });
 

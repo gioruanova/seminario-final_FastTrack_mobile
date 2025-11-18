@@ -1,7 +1,9 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as WebBrowser from 'expo-web-browser';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import config from '../constants/config';
 import { authService, UserProfile } from '../services/auth.service';
+import { notificationsService } from '../services/notifications.service';
 
 interface AuthContextType {
   user: UserProfile | null;
@@ -16,6 +18,8 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+const PUSH_TOKEN_KEY = '@push_token';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -85,6 +89,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
+      const pushToken = await AsyncStorage.getItem(PUSH_TOKEN_KEY);
+      if (pushToken) {
+        try {
+          await notificationsService.unregisterToken(pushToken);
+        } catch (error) {
+          console.error('Error eliminando token de notificaciones:', error);
+        }
+        await AsyncStorage.removeItem(PUSH_TOKEN_KEY);
+      }
       await authService.logout();
     } catch {
     } finally {

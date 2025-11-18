@@ -142,5 +142,12 @@ export const apiClient = {
       body: body ? JSON.stringify(body) : undefined,
     });
   },
+
+  async delete<T = any>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
+    return makeRequest<T>(endpoint, {
+      method: 'DELETE',
+      body: body ? JSON.stringify(body) : undefined,
+    });
+  },
 };
 

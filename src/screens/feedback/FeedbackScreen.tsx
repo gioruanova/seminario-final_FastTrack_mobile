@@ -75,6 +75,11 @@ export default function FeedbackScreen() {
 
 const styles = StyleSheet.create({
   formContainer: {
+    backgroundColor: COLORS.white,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#eee',
+    padding: 16,
     marginBottom: 24,
   },
   label: {

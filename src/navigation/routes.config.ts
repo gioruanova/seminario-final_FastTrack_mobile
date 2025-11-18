@@ -5,7 +5,6 @@ import OpenClaimsScreen from '../screens/claims/OpenClaimsScreen';
 import QuickContactsScreen from '../screens/contacts/QuickContactsScreen';
 import DashboardScreen from '../screens/dashboard/DashboardScreen';
 import FeedbackScreen from '../screens/feedback/FeedbackScreen';
-import MensajesScreen from '../screens/messages/MensajesScreen';
 import ProfileSettingsScreen from '../screens/profile/ProfileSettingsScreen';
 
 export type IconName = keyof typeof Icons;
@@ -47,12 +46,6 @@ export const drawerRoutes: RouteConfig[] = [
     component: QuickContactsScreen,
     title: 'Contactos Rápidos',
     icon: 'Phone',
-  },
-  {
-    name: 'Mensajes',
-    component: MensajesScreen,
-    title: 'Mensajes',
-    icon: 'MessageCircle',
   },
   {
     name: 'Feedback',
