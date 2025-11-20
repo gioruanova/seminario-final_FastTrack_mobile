@@ -1,6 +1,6 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, Alert, Linking, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, Linking, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import BackToHomeButton from '../../components/buttons/BackToHomeButton';
 import PageHeader from '../../components/header/PageHeader';
 import PageTitle from '../../components/header/PageTitle';
@@ -108,33 +108,33 @@ export default function ClaimDetailScreen() {
   };
 
   const handleOpenMap = async () => {
-    const destination = claim?.cliente_direccion?.trim();
+    const address = claim?.cliente_direccion?.trim();
 
-    if (!destination) {
-      Alert.alert('Sin ubicación', 'No contamos con la dirección del cliente.');
+
+
+    if (!address) {
+      Alert.alert('Sin ubicación', 'No contamos con la ubicación del cliente.');
       return;
     }
 
-    const encodedDestination = encodeURIComponent(destination);
+    const encodedAddress = encodeURIComponent(address);
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`;
 
-    const mapUrls = [
-      `geo:0,0?q=${encodedDestination}`, // intento mapa nativo
-      `comgooglemaps://?daddr=${encodedDestination}&directionsmode=driving`, // intento googl maps 
-      `https://www.google.com/maps/dir/?api=1&destination=${encodedDestination}`, // intento final sitio web
-    ];
-
-    for (const url of mapUrls) {
-      try {
+    try {
+      if (Platform.OS === 'android') {
         await Linking.openURL(url);
-        return;
-      } catch (error) {
-        console.warn(`No se pudo abrir: ${url}`, error);
+      } else {
+        const canOpen = await Linking.canOpenURL(url);
+        if (canOpen) {
+          await Linking.openURL(url);
+        } else {
+          Alert.alert('Error', 'No se puede abrir el mapa en este dispositivo');
+        }
       }
+    } catch (error) {
+      Alert.alert('Error', 'No se pudo abrir el mapa');
     }
-
-    Alert.alert('Error', 'No se pudo abrir el mapa en este dispositivo.');
   };
-
 
   const handleCallPhone = async (phoneNumber: string) => {
     const url = `tel:${phoneNumber}`;
@@ -332,9 +332,7 @@ export default function ClaimDetailScreen() {
             <Text style={styles.value}>{claim.cliente_direccion}</Text>
           </View>
 
-
-
-
+          {/* Mapa integrado */}
           <TouchableOpacity style={styles.mapButton} onPress={handleOpenMap}>
             <Icons.MapPin size={20} color={COLORS.white} />
             <Text style={styles.mapButtonText}>Ver en el mapa</Text>
@@ -588,7 +586,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderRadius: 8,
-
     marginTop: 12,
   },
   mapButtonText: {

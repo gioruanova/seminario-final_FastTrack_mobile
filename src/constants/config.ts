@@ -1,6 +1,6 @@
 const ENV = {
   dev: {
-    apiUrl: 'http://192.168.0.38:8888',
+    apiUrl: 'http://192.168.0.37:8888',
     defaultWebApp: 'https://fastrack-portal.vercel.app/',
   },
   prod: {

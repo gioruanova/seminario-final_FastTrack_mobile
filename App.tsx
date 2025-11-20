@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Notifications from 'expo-notifications';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useRef } from 'react';
-import { ActivityIndicator, ImageBackground, StyleSheet } from 'react-native';
+import { ActivityIndicator, ImageBackground, StyleSheet, Text } from 'react-native';
 
 import { COLORS } from './src/constants/theme';
 import AppProviders from './src/contexts/AppProviders';
@@ -71,6 +71,7 @@ function Navigation() {
     return (
       <ImageBackground source={backgroundImage} style={styles.loadingContainer} resizeMode="cover">
         <ActivityIndicator size="large" color={COLORS.primary} />
+        <Text style={styles.loadingText}>Portal Fast Track</Text>
       </ImageBackground>
     );
   }
@@ -108,6 +109,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 20,
+    fontWeight: '700',
+    color: COLORS.black,
   },
 });
 

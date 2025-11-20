@@ -45,6 +45,11 @@ export default function DashboardScreen() {
     setIsRefreshingOpen(false);
   };
 
+  const handleRefreshClaims = async ()=>{
+    handleRefreshClosed();
+    handleRefreshOpen();
+  }
+
   const handleRefreshClosed = async () => {
     setIsRefreshingClosed(true);
     await closedClaims.refetch();
@@ -78,7 +83,7 @@ export default function DashboardScreen() {
       <View style={styles.sectionContainer}>
         <PageHeader
           title={`Reclamos Abiertos ${openClaimsToShow.length > 0 ? `(Últimos ${openClaimsToShow.length})` : ''}`}
-          onRefresh={handleRefreshOpen}
+          onRefresh={handleRefreshClaims}
           isRefreshing={isRefreshingOpen}
           disabled={openClaims.isLoading}
         />
@@ -95,8 +100,8 @@ export default function DashboardScreen() {
 
       <View style={styles.sectionContainer}>
         <PageHeader
-          title={`Reclamos Cerrados ${openClaimsToShow.length > 0 ? `(Últimos ${closedClaimsToShow.length})` : ``}`}
-          onRefresh={handleRefreshClosed}
+          title={`${closedClaimsToShow.length > 0 ? `Reclamos Cerrados(Últimos ${closedClaimsToShow.length})` : ``}`}
+          onRefresh={handleRefreshClaims}
           isRefreshing={isRefreshingClosed}
           disabled={closedClaims.isLoading}
         />
