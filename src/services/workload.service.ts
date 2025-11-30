@@ -12,11 +12,11 @@ interface WorkloadToggleResponse {
 }
 
 export async function getWorkloadStatus(): Promise<ApiResponse<WorkloadStatus>> {
-  return apiClient.get<WorkloadStatus>('/customersApi/workload/estado');
+  return apiClient.get<WorkloadStatus>('/workload/estado');
 }
 
 export async function enableWorkload(): Promise<ApiResponse<WorkloadStatus>> {
-  const response = await apiClient.put<WorkloadToggleResponse>('/customersApi/workload/enable', {});
+  const response = await apiClient.put<WorkloadToggleResponse>('/workload/enable', {});
   
   if (response.success && response.data?.success) {
     return {
@@ -44,7 +44,7 @@ export async function enableWorkload(): Promise<ApiResponse<WorkloadStatus>> {
 }
 
 export async function disableWorkload(): Promise<ApiResponse<WorkloadStatus>> {
-  const response = await apiClient.put<WorkloadToggleResponse>('/customersApi/workload/disable', {});
+  const response = await apiClient.put<WorkloadToggleResponse>('/workload/disable', {});
   
   if (response.success && response.data?.success) {
     return {

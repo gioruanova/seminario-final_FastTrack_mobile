@@ -29,7 +29,7 @@ const processQueue = (error: Error | null = null) => {
 
 async function refreshToken(): Promise<boolean> {
   try {
-    const response = await fetch(`${API_URL}/publicApi/refresh`, {
+    const response = await fetch(`${API_URL}/refresh`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

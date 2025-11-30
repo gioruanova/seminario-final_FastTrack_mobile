@@ -30,7 +30,7 @@ export interface ApiResponse<T> {
 
 export async function getCompanyInfo(): Promise<ApiResponse<CompanyInfo>> {
   try {
-    const response = await apiClient.get<CompanyConfigResponse>('/customersApi/company/config');
+    const response = await apiClient.get<CompanyConfigResponse>('/companies/config');
     
     if (response.success && response.data?.company) {
       return {

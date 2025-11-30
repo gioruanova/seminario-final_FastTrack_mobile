@@ -1,6 +1,6 @@
+import type { ClaimState } from '../constants/claimStates';
 import { apiClient } from './api';
 import { ApiResponse } from './auth.service';
-import type { ClaimState } from '../constants/claimStates';
 
 export interface Claim {
   company_id: number;
@@ -31,11 +31,11 @@ export interface Claim {
 }
 
 export async function getClaims(): Promise<ApiResponse<Claim[]>> {
-  return apiClient.get<Claim[]>('/customersApi/reclamos/profesional');
+  return apiClient.get<Claim[]>('/reclamos');
 }
 
 export async function getClaimDetail(reclamoId: number): Promise<ApiResponse<Claim>> {
-  return apiClient.get<Claim>(`/customersApi/reclamos/profesional/gestion/${reclamoId}`);
+  return apiClient.get<Claim>(`/reclamos/${reclamoId}`);
 }
 
 export interface UpdateClaimData {
@@ -48,6 +48,6 @@ export async function updateClaim(
   reclamoId: number,
   data: UpdateClaimData
 ): Promise<ApiResponse<Claim>> {
-  return apiClient.put<Claim>(`/customersApi/reclamos/profesional/gestion/${reclamoId}`, data);
+  return apiClient.put<Claim>(`/reclamos/${reclamoId}`, data);
 }
 

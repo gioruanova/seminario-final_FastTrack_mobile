@@ -12,7 +12,7 @@ export const notificationsService = {
       const platform = Platform.OS === 'ios' ? 'ios' : 'android';
       
       const response = await apiClient.post<{ success?: boolean }>(
-        '/customersApi/notifications',
+        '/notifications',
         {
           expoPushToken,
           platform,
@@ -29,7 +29,7 @@ export const notificationsService = {
   async unregisterToken(expoPushToken: string): Promise<boolean> {
     try {
       const response = await apiClient.delete<{ success?: boolean }>(
-        '/customersApi/notifications',
+        '/notifications',
         {
           expoPushToken,
         }

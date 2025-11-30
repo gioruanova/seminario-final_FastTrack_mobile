@@ -39,23 +39,23 @@ export interface UpdateProfileData {
 
 export const authService = {
   async login(credentials: LoginCredentials) {
-    return apiClient.post('/publicApi/login', credentials);
+    return apiClient.post('/login', credentials);
   },
 
   async getProfile() {
-    return apiClient.get<UserProfile>('/publicApi/profile');
+    return apiClient.get<UserProfile>('/profile');
   },
 
   async updateProfile(data: UpdateProfileData) {
-    return apiClient.put('/customersApi/profile/manage', data);
+    return apiClient.put('/profile', data);
   },
 
   async refresh() {
-    return apiClient.get('/publicApi/refresh');
+    return apiClient.get('/refresh');
   },
 
   async logout() {
-    return apiClient.get('/publicApi/logout');
+    return apiClient.get('/logout');
   },
 };
 
