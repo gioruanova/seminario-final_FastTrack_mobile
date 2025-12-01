@@ -131,7 +131,7 @@ export default function ClaimDetailScreen() {
           Alert.alert('Error', 'No se puede abrir el mapa en este dispositivo');
         }
       }
-    } catch (error) {
+    } catch {
       Alert.alert('Error', 'No se pudo abrir el mapa');
     }
   };

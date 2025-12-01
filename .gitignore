@@ -44,7 +44,5 @@ app-example
 /ios
 /android
 
-fastrack-mobile-77c26-firebase-adminsdk-fbsvc-c64277064e.json
-
-
+fasttrack-mobile-portal-firebase-adminsdk-*.json
 google-services.json

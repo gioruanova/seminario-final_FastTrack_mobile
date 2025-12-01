@@ -1,6 +1,6 @@
 import type { DrawerNavigationProp } from '@react-navigation/drawer';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { COLORS } from '../../constants/theme';
 import type { IconName } from '../../navigation/routes.config';
@@ -9,36 +9,6 @@ import Icons from '../ui/Icons';
 
 type DrawerScreenName = keyof RootDrawerParamList;
 type NavigationProp = DrawerNavigationProp<RootDrawerParamList>;
-
-const DRAWER_CLOSE_DELAY = 150;
-
-const navigateToScreen = (
-  navigation: NavigationProp,
-  screenName: DrawerScreenName
-): void => {
-  switch (screenName) {
-    case 'Dashboard':
-      navigation.navigate('Dashboard');
-      break;
-    case 'OpenClaims':
-      navigation.navigate('OpenClaims');
-      break;
-    case 'ClosedClaims':
-      navigation.navigate('ClosedClaims');
-      break;
-    case 'QuickContacts':
-      navigation.navigate('QuickContacts');
-      break;
-    case 'Feedback':
-      navigation.navigate('Feedback');
-      break;
-    case 'ProfileSettings':
-      navigation.navigate('ProfileSettings');
-      break;
-    default:
-      navigation.navigate('Dashboard');
-  }
-};
 
 interface BackToHomeButtonProps {
   destination?: DrawerScreenName;
@@ -56,27 +26,32 @@ export default function BackToHomeButton({
   iconColor = COLORS.white,
 }: BackToHomeButtonProps) {
   const navigation = useNavigation<NavigationProp>();
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
 
   const handlePress = useCallback(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-
     navigation.dispatch(DrawerActions.closeDrawer());
-
-    timeoutRef.current = setTimeout(() => {
-      navigateToScreen(navigation, destination);
-      timeoutRef.current = null;
-    }, DRAWER_CLOSE_DELAY);
+    
+    switch (destination) {
+      case 'Dashboard':
+        navigation.navigate('Dashboard');
+        break;
+      case 'OpenClaims':
+        navigation.navigate('OpenClaims');
+        break;
+      case 'ClosedClaims':
+        navigation.navigate('ClosedClaims');
+        break;
+      case 'QuickContacts':
+        navigation.navigate('QuickContacts');
+        break;
+      case 'Feedback':
+        navigation.navigate('Feedback');
+        break;
+      case 'ProfileSettings':
+        navigation.navigate('ProfileSettings');
+        break;
+      default:
+        navigation.navigate('Dashboard');
+    }
   }, [destination, navigation]);
 
   const IconComponent = Icons[iconName];
