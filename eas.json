@@ -5,26 +5,17 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal",
-      "env": {
-        "GOOGLE_SERVICES_JSON": "@google-services-json"
-      }
+      "distribution": "internal"
     },
     "preview": {
       "distribution": "internal",
       "android": {
         "buildType": "apk"
-      },
-      "env": {
-        "GOOGLE_SERVICES_JSON": "@google-services-json"
       }
     },
     "production": {
       "android": {
         "buildType": "apk"
-      },
-      "env": {
-        "GOOGLE_SERVICES_JSON": "@google-services-json"
       }
     }
   },
