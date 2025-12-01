@@ -1,0 +1,105 @@
+const fs = require('fs');
+const path = require('path');
+
+if (process.env.GOOGLE_SERVICES_JSON) {
+  try {
+    const googleServicesContent = JSON.parse(process.env.GOOGLE_SERVICES_JSON);
+    const googleServicesPath = path.join(__dirname, 'google-services.json');
+    
+    fs.writeFileSync(
+      googleServicesPath,
+      JSON.stringify(googleServicesContent, null, 2),
+      'utf8'
+    );
+    
+    console.log('✅ google-services.json creado desde variable de entorno');
+  } catch (error) {
+    console.error('❌ Error al crear google-services.json:', error.message);
+  }
+}
+
+module.exports = {
+  expo: {
+    name: "Portal Fast Track",
+    slug: "fast-track",
+    version: "1.0.0",
+    orientation: "portrait",
+    icon: "./assets/images/icon.png",
+    scheme: "ftmobile",
+    userInterfaceStyle: "automatic",
+    newArchEnabled: true,
+    ios: {
+      supportsTablet: true,
+      infoPlist: {
+        NSLocationWhenInUseUsageDescription: "Esta app necesita acceso a tu ubicación para mostrarte la ruta hacia el destino."
+      }
+    },
+    android: {
+      adaptiveIcon: {
+        foregroundImage: "./assets/images/icon.png"
+      },
+      edgeToEdgeEnabled: true,
+      predictiveBackGestureEnabled: false,
+      package: "com.fastrack.fastmobile",
+      useNextNotificationsApi: true,
+      versionCode: 2,
+      permissions: [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "POST_NOTIFICATIONS"
+      ],
+      googleServicesFile: "./google-services.json"
+    },
+    web: {
+      output: "static",
+      favicon: "./assets/images/icon.png"
+    },
+    plugins: [
+      [
+        "expo-splash-screen",
+        {
+          image: "./assets/images/icon.png",
+          imageWidth: 200,
+          resizeMode: "contain",
+          backgroundColor: "#ffffff",
+          dark: {
+            backgroundColor: "#000000"
+          }
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          icon: "./assets/images/icon.png",
+          color: "#8e51ff",
+          sounds: []
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          android: {
+            compileSdkVersion: 34,
+            buildToolsVersion: "34.0.0"
+          }
+        }
+      ],
+      "./app.plugin.js"
+    ],
+    experiments: {
+      reactCompiler: true
+    },
+    extra: {
+      eas: {
+        projectId: "3a291397-b027-4617-b3a7-87f8f7cb5160"
+      }
+    },
+    runtimeVersion: {
+      policy: "appVersion"
+    },
+    updates: {
+      url: "https://u.expo.dev/3a291397-b027-4617-b3a7-87f8f7cb5160"
+    }
+  }
+};
+
